@@ -1,6 +1,7 @@
 package pluginmetamap; 
  
 import gate.*; 
+import gate.annotation.AnnotationImpl;
 import gate.creole.*; 
 import gate.creole.metadata.*; 
 import java.net.URL;
@@ -48,13 +49,22 @@ public class NewPlugin extends AbstractLanguageAnalyser {
                    .replaceAll(";", "").replaceAll(":", "");
            System.out.println(palabraReplaced);
        }*/
-       AnnotationSet set=this.document.getAnnotations();
-       AnnotationSet set1=set.get("Token");
-       Iterator<Annotation> iterator = set1.iterator();
-       
-       while(iterator.hasNext()){
-           Annotation an=iterator.next();
-           System.out.println(an.getFeatures().get("string").toString());
+       try {
+            AnnotationSet set=this.document.getAnnotations();
+            AnnotationSet set1=set.get("Token");
+            Iterator<Annotation> iterator = set1.iterator();
+            AnnotationSet out=this.document.getAnnotations("miPlugin");
+
+            while(iterator.hasNext()){
+                Annotation an=iterator.next();
+                System.out.println(an.getFeatures().get("string").toString());
+
+                out.add(an.getStartNode().getOffset(),an.getEndNode().getOffset()
+                        ,"Mi etiqueta",Utils.featureMap("type","cosa"));
+            }
+       } catch (Exception e) {
+           System.err.println(e.getMessage());
+           e.printStackTrace(System.err);
        }
        
        System.out.println();
