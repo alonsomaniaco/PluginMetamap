@@ -12,6 +12,12 @@ import java.util.Iterator;
  *  class as a GATE Resource, and gives the information GATE needs 
  *  to configure the resource appropriately. 
  */ 
+/**
+ * ----------------------Traducción---------------------------------
+ * Recurso de proceso. La anotación @CreoleResource define esta clase 
+ * como un Recurso de GATE, y y brinda la información que GATE necesita
+ * para configurar el recurso apropiadamente
+ */
 @CreoleResource(name = "Example PR", 
                 comment = "An example processing resource") 
 public class NewPlugin extends AbstractLanguageAnalyser { 
@@ -21,10 +27,21 @@ public class NewPlugin extends AbstractLanguageAnalyser {
     * class is created either from GATE Developer GUI or if 
     * initiated using Factory.createResource() method. 
     */ 
+    /**
+     * ----------------------Traducción---------------------------------
+     * Este método es llamado cada vez que un objeto de esta
+     * clase es creado ya sea desde GATE Developer GUI o si 
+     * se inicializa utilizando el método Factory.createResource().
+     */
    public Resource init() throws ResourceInstantiationException { 
         // here initialize all required variables, and may 
         // be throw an exception if the value for any of the 
         // mandatory parameters is not provided 
+       /**
+        * Aquí se inicializa todas las variables neceesarias, y 
+        * puede lanzar una excepcion si el valor para alguno 
+        * de los parámetros requeridos no ha sido proporcionado.
+        */
  
         if(this.rulesURL == null) 
             throw new ResourceInstantiationException("rules URL null"); 
@@ -39,9 +56,22 @@ public class NewPlugin extends AbstractLanguageAnalyser {
     * gets called when user click on the "RUN" button in the 
     * GATE Developer GUI’s application window. 
     */ 
+   
+   /**
+    * ----------------------Traducción---------------------------------
+    * ESte método debería proveer la funcionalidad actual del PR(desde
+    * donde comienza la ejecución principal). Este método es llamado
+    * cuando un usuario hace click en el botón 'RUN' de la ventana de
+    * GATE Developer.
+    * 
+    */
    public void execute() throws ExecutionException { 
         // write code here 
        System.out.println("Iniciado");
+       
+       /**
+        * Código para procesar el texto por nuestra propia cuenta.
+        */
        /*String contenido=this.document.getContent().toString();
        String[] palabras=contenido.split(" ");
        for(String palabra:palabras){
@@ -71,6 +101,7 @@ public class NewPlugin extends AbstractLanguageAnalyser {
    } 
  
    /* this method is called to reinitialize the resource */ 
+   //Este método se llama al reiniciar el recurso
    public void reInit() throws ResourceInstantiationException { 
        // reinitialization code 
        System.out.println("Reiniciado");
@@ -92,9 +123,24 @@ public class NewPlugin extends AbstractLanguageAnalyser {
     * 
     * for example to set a value for outputAnnotationSetName 
     */ 
+   /**
+    * Hay dos tipos de parametros:
+    * 1. Parámetros de inicialización - los valores para estos parametros
+    * son obligatorios en la inicializacion de un nuevo recurso y no pueden
+    * ser modificados.
+    * 2. Parámetros en tiempo de ejecución - el valor de estos parámetros se 
+    * obtiene en tiempo de ejecución. Estos son los parámetros de tiempo de
+    * ejecución y su valor puede ser modificado antes de comenzar el PR.
+    * (antes de hacer click en el botón "RUN" de GATE Developer)
+    * Un parámetro MyParam se define por un par de metodos getMyParam y
+    * setMyParam(con la primera letra del nombre del parámetro en mayuscula
+    * al estilo normal de Java Beans), con el setter anotado con la 
+    * anotación @CreoleParameter.
+    */
    String outputAnnotationSetName; 
  
    //getter and setter methods 
+   //Métodos getter y setter
 
    /* get<parameter name with first letter Capital>  */ 
    public String getOutputAnnotationSetName() { 
@@ -104,6 +150,11 @@ public class NewPlugin extends AbstractLanguageAnalyser {
    /* The setter method is annotated to tell GATE that it defines an 
     * optional runtime parameter. 
     */ 
+   /**
+    * 
+    * El método setter se anota para decirle a 
+    * GATE que se define un parámetro opcional de tiempo de ejecución.
+    */
    @Optional 
    @RunTime 
    @CreoleParameter( 
@@ -123,6 +174,11 @@ public class NewPlugin extends AbstractLanguageAnalyser {
    /* This parameter is not annotated @RunTime or @Optional, so it is a 
     * required init−time parameter. 
     */ 
+   /**
+    * 
+    * Este parámetro no está anotado con @Runtime u @Optional, por 
+    * lo que se trata de un parámetro de inicio
+    */
    @CreoleParameter( 
        comment = "example of an inittime parameter", 
        defaultValue = "resources/morph/default.rul") 
